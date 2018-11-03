@@ -1,0 +1,16 @@
+[
+{
+  "modid": "mfw",
+  "name": "ModFramework",
+  "description": "Easy mod developing.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["hiroki19990625"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

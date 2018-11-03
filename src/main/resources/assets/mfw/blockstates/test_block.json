@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "mfw:test_block",
+    "uvlock": true
+  },
+  "variants": {
+    "normal": [
+      {}
+    ]
+  }
+}
