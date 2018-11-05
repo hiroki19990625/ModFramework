@@ -10,8 +10,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
-public class RegisterBlockAndItem {
-    public RegisterBlockAndItem() {
+public class RegisterBlockAndItemTest {
+    public RegisterBlockAndItemTest() {
         RegisterEventHandler handler = new RegisterEventHandler();
         handler.registerItem(new SimpleRegisterItem(new Item()
                 .setRegistryName(new ResourceLocation(ModCore.ModID, "test"))
