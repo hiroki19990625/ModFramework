@@ -1,6 +1,5 @@
 package jp.hiroki19990625.modframework;
 
-import jp.hiroki19990625.modframework.tests.RegisterEntityTest;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,8 +18,6 @@ public class ModCore {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ModLogger = event.getModLog();
-
-        new RegisterEntityTest();
     }
 
     @EventHandler

@@ -4,24 +4,28 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
 
+import javax.annotation.Nonnull;
+
 public class SimpleRegisterBlock implements IRegisterBlock {
     private Block blockInstance;
     private int metaDataCount;
 
-    public SimpleRegisterBlock(Block block) {
+    public SimpleRegisterBlock(@Nonnull Block block) {
         this(block, 1);
     }
 
-    public SimpleRegisterBlock(Block block, int metaCount) {
+    public SimpleRegisterBlock(@Nonnull Block block, int metaCount) {
         blockInstance = block;
         metaDataCount = metaCount;
     }
 
+    @Nonnull
     @Override
     public Block getBlock() {
         return blockInstance;
     }
 
+    @Nonnull
     @Override
     public ModelResourceLocation getResourceLocation() {
         return new ModelResourceLocation(blockInstance.getLocalizedName(), "inventory");
@@ -32,6 +36,7 @@ public class SimpleRegisterBlock implements IRegisterBlock {
         return metaDataCount;
     }
 
+    @Nonnull
     @Override
     public ItemBlock getBlockItem() {
         return (ItemBlock) new ItemBlock(blockInstance).setRegistryName(blockInstance.getRegistryName());

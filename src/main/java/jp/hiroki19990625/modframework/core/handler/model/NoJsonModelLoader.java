@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 
 public class NoJsonModelLoader implements ICustomModelLoader {
@@ -13,7 +14,7 @@ public class NoJsonModelLoader implements ICustomModelLoader {
 
     private boolean initedFlag;
 
-    public NoJsonModelLoader(String modDomain) {
+    public NoJsonModelLoader(@Nonnull String modDomain) {
         this.modDomain = modDomain;
     }
 
@@ -33,7 +34,7 @@ public class NoJsonModelLoader implements ICustomModelLoader {
 
     }
 
-    public void registerModel(ResourceLocation location, IModel model) {
+    public void registerModel(@Nonnull ResourceLocation location, IModel model) {
         if (initedFlag) {
             return;
         }
