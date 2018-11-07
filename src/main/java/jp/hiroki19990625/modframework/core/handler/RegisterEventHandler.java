@@ -40,6 +40,7 @@ public class RegisterEventHandler {
 
     @SubscribeEvent
     protected void registerItems(RegistryEvent.Register<Item> event) {
+        ModCore.ModLogger.info("Start RegisterItem");
         for (IRegisterItem item : items.values()) {
             event.getRegistry().register(item.getItem());
             ModCore.ModLogger.info("RegisterItem >> " + item.getItem().getRegistryName().toString());
@@ -48,6 +49,7 @@ public class RegisterEventHandler {
 
     @SubscribeEvent
     protected void registerBlocks(RegistryEvent.Register<Block> event) {
+        ModCore.ModLogger.info("Start RegisterBlock");
         for (IRegisterBlock block : blocks.values()) {
             event.getRegistry().register(block.getBlock());
             ModCore.ModLogger.info("RegisterBlock >> " + block.getBlock().getRegistryName().toString());
@@ -56,6 +58,7 @@ public class RegisterEventHandler {
 
     @SubscribeEvent
     protected void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+        ModCore.ModLogger.info("Start RegisterEntity");
         for (IRegisterEntity entity : entities.values()) {
             EntityEntry entry = new EntityEntry(entity.getEntity(), entity.getName());
             entry.setRegistryName(entity.getRegistryName());
@@ -77,6 +80,7 @@ public class RegisterEventHandler {
 
     @SubscribeEvent
     protected void registerSoundEvents(RegistryEvent.Register<SoundEvent> event) {
+        ModCore.ModLogger.info("Start RegisterSoundEvent");
         for (IRegisterSoundEvent soundEvent : soundEvents.values()) {
             event.getRegistry().register(soundEvent.getSoundEvent());
             ModCore.ModLogger.info("RegisterSoundEvent >> " + soundEvent.getSoundEvent().getRegistryName().toString());
@@ -85,6 +89,7 @@ public class RegisterEventHandler {
 
     @SubscribeEvent
     protected void registerEnchantment(RegistryEvent.Register<Enchantment> event) {
+        ModCore.ModLogger.info("Start RegisterEnchantment");
         for (IRegisterEnchantment enchantment : enchantments.values()) {
             event.getRegistry().register(enchantment.getEnchantment());
             ModCore.ModLogger.info("RegisterEnchantment >> " + enchantment.getEnchantment().getRegistryName().toString());

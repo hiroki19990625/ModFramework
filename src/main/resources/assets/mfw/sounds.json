@@ -1,0 +1,8 @@
+{
+  "test_sound": {
+    "subtitle": "mwf.sound.test_sound",
+    "sounds": [
+      "mfw:test_sound"
+    ]
+  }
+}
