@@ -6,11 +6,17 @@ import jp.hiroki19990625.modframework.core.handler.enchantment.IRegisterEnchantm
 import jp.hiroki19990625.modframework.core.handler.entity.IRegisterEntity;
 import jp.hiroki19990625.modframework.core.handler.item.IRegisterItem;
 import jp.hiroki19990625.modframework.core.handler.item.SimpleRegisterItem;
+import jp.hiroki19990625.modframework.core.handler.potion.IRegisterPotion;
+import jp.hiroki19990625.modframework.core.handler.potion.IRegisterPotionType;
+import jp.hiroki19990625.modframework.core.handler.potion.SimpleRegisterPotionType;
 import jp.hiroki19990625.modframework.core.handler.sound.IRegisterSoundEvent;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -33,6 +39,8 @@ public class RegisterEventHandler {
     private HashMap<String, IRegisterEntity> entities = new HashMap<>();
     private HashMap<String, IRegisterSoundEvent> soundEvents = new HashMap<>();
     private HashMap<String, IRegisterEnchantment> enchantments = new HashMap<>();
+    private HashMap<String, IRegisterPotion> potions = new HashMap<>();
+    private HashMap<String, IRegisterPotionType> potionTypes = new HashMap<>();
 
     public RegisterEventHandler() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -88,11 +96,40 @@ public class RegisterEventHandler {
     }
 
     @SubscribeEvent
-    protected void registerEnchantment(RegistryEvent.Register<Enchantment> event) {
+    protected void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
         ModCore.ModLogger.info("Start RegisterEnchantment");
         for (IRegisterEnchantment enchantment : enchantments.values()) {
             event.getRegistry().register(enchantment.getEnchantment());
             ModCore.ModLogger.info("RegisterEnchantment >> " + enchantment.getEnchantment().getRegistryName().toString());
+        }
+    }
+
+    @SubscribeEvent
+    protected void registerPotions(RegistryEvent.Register<Potion> event) {
+        ModCore.ModLogger.info("Start RegisterPotion");
+        for (IRegisterPotion potion : potions.values()) {
+            event.getRegistry().register(potion.getPotion());
+            if (potion.isAutoPotionType()) {
+                PotionType p = new PotionType(potion.getTypeName(), new PotionEffect(potion.getPotion()));
+                ResourceLocation pl = potion.getPotion().getRegistryName();
+                p.setRegistryName(new ResourceLocation(pl.getResourceDomain(), pl.getResourcePath() + "_type"));
+                registerPotionType(new SimpleRegisterPotionType(p));
+            } else {
+                IRegisterPotionType p = potion.getRegisterPotionType();
+                if (p != null) {
+                    registerPotionType(p);
+                }
+            }
+            ModCore.ModLogger.info("RegisterPotion >> " + potion.getPotion().getRegistryName().toString());
+        }
+    }
+
+    @SubscribeEvent
+    protected void registerPotionTypes(RegistryEvent.Register<PotionType> event) {
+        ModCore.ModLogger.info("Start RegisterPotionType");
+        for (IRegisterPotionType postionType : potionTypes.values()) {
+            event.getRegistry().register(postionType.getPotionType());
+            ModCore.ModLogger.info("RegisterPotion >> " + postionType.getPotionType().getRegistryName().toString());
         }
     }
 
@@ -144,6 +181,20 @@ public class RegisterEventHandler {
         this.enchantments.put(enchantment.getEnchantment().getRegistryName().toString(), enchantment);
     }
 
+    public void registerPotion(@Nonnull IRegisterPotion potion) {
+        if (initedFlag)
+            return;
+
+        this.potions.put(potion.getPotion().getRegistryName().toString(), potion);
+    }
+
+    public void registerPotionType(@Nonnull IRegisterPotionType potionType) {
+        if (initedFlag)
+            return;
+
+        this.potionTypes.put(potionType.getPotionType().getRegistryName().toString(), potionType);
+    }
+
     public IRegisterBlock getBlock(ResourceLocation registryName) {
         return this.blocks.get(registryName.toString());
     }
@@ -162,5 +213,13 @@ public class RegisterEventHandler {
 
     public IRegisterEnchantment getEnchantment(ResourceLocation registerName) {
         return this.enchantments.get(registerName.toString());
+    }
+
+    public IRegisterPotion getPotion(ResourceLocation registerName) {
+        return this.potions.get(registerName.toString());
+    }
+
+    public IRegisterPotionType getPotionType(ResourceLocation registerName) {
+        return this.potionTypes.get(registerName.toString());
     }
 }

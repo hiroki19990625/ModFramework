@@ -18,6 +18,12 @@ public class ModCore {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ModLogger = event.getModLog();
+        //new RegisterBlockTest();
+        //new RegisterEnchantmentTest();
+        //new RegisterEntityTest();
+        //new RegisterItemTest();
+        //new RegisterPotionTest();
+        //new RegisterSoundEventTest();
     }
 
     @EventHandler
